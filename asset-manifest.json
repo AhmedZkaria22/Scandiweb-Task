@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Scandiweb-Task/static/css/main.3929be43.css",
+    "main.js": "/Scandiweb-Task/static/js/main.b3123cfa.js",
+    "static/js/787.39493b2f.chunk.js": "/Scandiweb-Task/static/js/787.39493b2f.chunk.js",
+    "static/media/shirt.png": "/Scandiweb-Task/static/media/shirt.a2cde238d46625a74419.png",
+    "index.html": "/Scandiweb-Task/index.html",
+    "main.3929be43.css.map": "/Scandiweb-Task/static/css/main.3929be43.css.map",
+    "main.b3123cfa.js.map": "/Scandiweb-Task/static/js/main.b3123cfa.js.map",
+    "787.39493b2f.chunk.js.map": "/Scandiweb-Task/static/js/787.39493b2f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3929be43.css",
+    "static/js/main.b3123cfa.js"
+  ]
+}
