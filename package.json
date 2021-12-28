@@ -2,7 +2,7 @@
   "name": "scandi-design",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ahmedzkaria22.github.io/Scandiweb-Task",
+  "homepage": "./",
   "dependencies": {
     "@apollo/client": "^3.5.6",
     "@testing-library/jest-dom": "^5.16.1",
@@ -12,7 +12,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "express-graphql": "^0.12.0",
-    "gh-pages": "^3.2.3",
     "graphql": "^15.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -21,10 +20,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "server": "nodemon server.js",
     "client": "npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\""
