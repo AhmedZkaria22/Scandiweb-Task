@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { gql } from '@apollo/client';
+import { Query } from '@apollo/client/react/components/Query';
+import { useState } from 'react';
+import CartPage from './components/CartPage';
+import Navbar from './components/Navbar';
+import PLP from './components/PLP';
+import ProductView from './components/ProductView';
+import './style/App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 function App() {
+
+  const [ProdGender, setProdGender] = useState('');
+  const [CurrencyListener, setCurrencyListener] = useState('$');
+  const Product_Query = gql`query ItemQuery{
+      ProductsData{
+        id, title, description, price, category, gender, sizes, selected
+      }
+  }`;   
+
   return (
+    <Router>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Query query={Product_Query}>{
+      ({loading, error, data}) => {
+      if(loading) return <h4>loading ...</h4>
+      if(error) console.log(error);
+      console.log(data);
+
+      return (<>
+        <Navbar  dt={data}  ProdGender = {ProdGender}  setProdGender = {setProdGender} CurrencyListener={CurrencyListener} setCurrencyListener={setCurrencyListener} />
+        <Routes>          
+          <Route path='/'  element={<PLP ProdGender = {ProdGender} CurrencyListener={CurrencyListener} />} />
+          <Route path='/cart'  element={<CartPage CurrencyListener={CurrencyListener} />} />
+          <Route path='/product-view'  element={<ProductView CurrencyListener={CurrencyListener} />} />
+          {/* <PLP ProdGender = {ProdGender} CurrencyListener={CurrencyListener} />
+          <CartPage CurrencyListener={CurrencyListener} />
+          <ProductView CurrencyListener={CurrencyListener} /> */}
+        </Routes>
+      </>)
+      }}</Query>
+      <div className='miniCart-overlay'></div>
     </div>
+    </Router>
   );
 }
 
