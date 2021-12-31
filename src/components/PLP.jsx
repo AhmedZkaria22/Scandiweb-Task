@@ -1,81 +1,69 @@
 import React, { PureComponent } from 'react';
 import { gql } from '@apollo/client';
-import {Query} from '@apollo/client/react/components/Query';
-import Product from './Product';
-import img1 from '../assets/images/shirt.png';
-
+import { Product_Query } from '../graphql/graphqls';
+import QueryComponent from './QueryComponent';
 
 class PLP extends PureComponent {
     constructor(props){
         super(props);     
-        this.state={ genderListener: '' }
+        this.state={ genderListener: '', categListener: '' }
     }
 
     componentDidUpdate(prevProps){
         if( this.props !== prevProps ){
-            this.setState({ genderListener: this.props.ProdGender });
-            console.log(this.props.ProdGender, this.state.genderListener);
+            this.setState({ genderListener: this.props.ProdGender, categListener: this.props.ProdCatg });
         }
     }
     
 
     render() {
-        const {ProdGender, CurrencyListener} = this.props;
+        const {ProdCatg, ProdGender, CurrencyListener} = this.props;
         const genderListener = this.state.genderListener;
-        const Item_Query = gql`query ItemQuery{
-            ProductsData{
-                id, title, description, price, category, gender
-            }
-        }`;
+        const categListener = this.state.categListener;        
+
         const Gender_Query = gql`query Gender_Query{
             ProductsDataByGender(gender: "${ProdGender}"){
                 id, title, price, category, gender, sizes
             }
         }`;
+        
+        const Categ_Query = gql`query Categ_Query{
+            ProductsDataByCategory(categ: "${ProdCatg}"){
+                id, title, price, category, gender, sizes
+            }
+        }`;
+
+        const Gender_Categ_Query = gql`query Gender_Categ_Query{
+            ProductsDataByGender_Category(gender: "${ProdGender}", categ: "${ProdCatg}"){
+                id, title, price, category, gender, sizes
+            }
+        }`;
+
     
         return (
             <section className='plp'>
-                <h2>Category name</h2>                
+                <h2>{ProdCatg}</h2>
                 <div className='products-wrapper'>
                 {
-                    // (genderListener === '' || genderListener === undefined) &&
-                    (genderListener !== 'women' && genderListener !== 'men' && genderListener !== 'kids') &&
-                    <Query query={Item_Query}>{
-                        ({loading, error, data}) => {
-                            if(loading) return <h4>loading ...</h4>
-                            if(error) console.log(error);
-                            console.log(data);
-                            return <>{  data.ProductsData.map( (prd, i) => {
-                                return(
-                                    // <Product key={i} preload={[ img1, prd.title, prd.price, prd.gender ]} />
-                                    <Product key={i} preload={[ img1, prd.id, prd.title, prd.description, prd.price, prd.category, prd.gender, prd.sizes, CurrencyListener]} />
-                                )
-                            } ) }</>
-                        }
-                    }</Query>
-                    // <>{ dt.ProductsData.map( (prd, i) => {
-                    //     return(
-                    //         <Product key={i} preload={[ img1, prd.id, prd.title, prd.description, prd.price, prd.category, prd.gender, prd.sizes, CurrencyListener]} />
-                    //     )
-                    // } ) }</>
-
+                    (genderListener === '' && categListener === '' ) &&
+                    <QueryComponent     QueryProp={Product_Query}     CurrencyListenerProp={CurrencyListener}     TargetData={'ProductsData'}/>
                 }
+                
                 {
-                    // (genderListener !== '' && genderListener.length > 2) &&
-                    (genderListener === 'women' || genderListener === 'men' || genderListener === 'kids') &&
-                    <Query query={Gender_Query}>{
-                        ({loading, error, data}) => {
-                            if(loading) return <h4>loading ...</h4>
-                            if(error) console.log(error);
-                            console.log(data);
-                            return <>{  data.ProductsDataByGender.map( (prd, i) => {
-                                return(
-                                    // <Product key={i} preload={[ img1, prd.title, prd.price, prd.gender ]} />
-                                    <Product key={i} preload={[ img1, prd.id, prd.title, prd.description, prd.price, prd.category, prd.gender, prd.sizes, CurrencyListener]} />
-                                )
-                            } ) }</>
-                        }
-                    }</Query>
+                    ((genderListener === 'women' || genderListener === 'men' || genderListener === 'kids') && categListener === '') &&
+                    <QueryComponent     QueryProp={Gender_Query}     CurrencyListenerProp={CurrencyListener}     TargetData={'ProductsDataByGender'}/>
+                }
+                
+                {
+                    ((categListener === 'all' || categListener === 'tech' || categListener === 'clothes') && genderListener === '') &&
+                    <QueryComponent     QueryProp={Categ_Query}     CurrencyListenerProp={CurrencyListener}     TargetData={'ProductsDataByCategory'}/>
+                }
+
+                {
+                    (   (categListener === 'all' || categListener === 'tech' || categListener === 'clothes') 
+                        && (genderListener === 'women' || genderListener === 'men' || genderListener === 'kids') 
+                    )   &&
+                    <QueryComponent    QueryProp={Gender_Categ_Query}     CurrencyListenerProp={CurrencyListener}     TargetData={'ProductsDataByGender_Category'}/>
                 }
                 </div>                
             </section>

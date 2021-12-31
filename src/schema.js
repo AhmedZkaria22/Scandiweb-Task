@@ -45,6 +45,21 @@ const rootQuery = new GraphQLObjectType({
                 return ProductsData.filter( prod => prod.gender === gender );
             }
         },
+        ProductsDataByCategory: {
+            type: GraphQLList(ProductType),
+            args:{ categ: {type: GraphQLString} },
+            resolve: (_, {categ}) => {
+                return ProductsData.filter( prod => prod.category.split(' ').indexOf(categ) !== -1 );
+            }
+        },
+        ProductsDataByGender_Category: {
+            type: GraphQLList(ProductType),
+            args:{ gender: {type: GraphQLString},   categ: {type: GraphQLString} },
+            resolve: (_, {gender, categ}) => {
+                return ProductsData.filter( prod => (prod.category.split(' ').indexOf(categ) !== -1 && prod.gender === gender) );
+            }
+        },
+
         UserProductsCart: {
             type: GraphQLList(ProductType),
             resolve: () => {

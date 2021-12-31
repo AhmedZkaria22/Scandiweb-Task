@@ -7,17 +7,19 @@ import PLP from './components/PLP';
 import ProductView from './components/ProductView';
 import './style/App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Product_Query } from './graphql/graphqls';
 
 
 function App() {
 
   const [ProdGender, setProdGender] = useState('');
+  const [ProdCatg, setProdCatg] = useState('');
   const [CurrencyListener, setCurrencyListener] = useState('$');
-  const Product_Query = gql`query ItemQuery{
-      ProductsData{
-        id, title, description, price, category, gender, sizes, selected
-      }
-  }`;   
+  // const Product_Query = gql`query ItemQuery{
+  //     ProductsData{
+  //       id, title, description, price, category, gender, sizes, selected
+  //     }
+  // }`;   
 
   return (
     <Router>
@@ -29,9 +31,9 @@ function App() {
       console.log(data);
 
       return (<>
-        <Navbar  dt={data}  ProdGender = {ProdGender}  setProdGender = {setProdGender} CurrencyListener={CurrencyListener} setCurrencyListener={setCurrencyListener} />
+        <Navbar  dt={data}  ProdCatg = {ProdCatg} setProdCatg = {setProdCatg}  ProdGender = {ProdGender}  setProdGender = {setProdGender} CurrencyListener={CurrencyListener} setCurrencyListener={setCurrencyListener} />
         <Routes>          
-          <Route path='/'  element={<PLP ProdGender = {ProdGender} CurrencyListener={CurrencyListener} />} />
+          <Route path='/'  element={<PLP ProdCatg = {ProdCatg} ProdGender = {ProdGender} CurrencyListener={CurrencyListener} />} />
           <Route path='/cart'  element={<CartPage CurrencyListener={CurrencyListener} />} />
           <Route path='/product-view'  element={<ProductView CurrencyListener={CurrencyListener} />} />
           {/* <PLP ProdGender = {ProdGender} CurrencyListener={CurrencyListener} />

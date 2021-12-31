@@ -16,6 +16,7 @@ $--c-light: #8D8F9A;
         font-size: 32px;
         line-height: 50px;
         margin-block: 4rem;
+        text-transform: capitalize;
     }
     .products-wrapper{
         display: grid;
@@ -78,7 +79,7 @@ $--c-light: #8D8F9A;
             top: calc(53vh - 1.35rem);
             right: 0;
             display: none;
-            svg{
+            img{
                 width: 3rem;
                 height: 3rem;
             }

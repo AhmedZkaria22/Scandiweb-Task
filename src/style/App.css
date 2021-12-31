@@ -72,6 +72,14 @@ button:focus {
   padding-inline: 8%;
   z-index: 9;
 }
+#navbar .navbar__gender-filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
 #navbar .navbar__gender-filter button {
   color: #1D1F22;
   font-weight: 500;
@@ -80,12 +88,23 @@ button:focus {
   text-align: Center;
   text-transform: uppercase;
   padding: 1.2rem 0rem;
-  position: relative;
 }
 #navbar .navbar__gender-filter button:not(:last-of-type) {
   margin-right: 1.5rem;
 }
-#navbar .navbar__gender-filter button::after {
+#navbar .navbar__gender-filter button:nth-of-type(2) {
+  display: none;
+}
+#navbar .navbar__gender-filter button img {
+  display: block;
+  -o-object-fit: fill;
+     object-fit: fill;
+  width: 20px;
+}
+#navbar .navbar__gender-filter button:nth-of-type(n+3) {
+  position: relative;
+}
+#navbar .navbar__gender-filter button:nth-of-type(n+3)::after {
   content: "";
   position: absolute;
   top: calc(100% + 0.16rem);
@@ -95,8 +114,9 @@ button:focus {
   background-color: #5ECE7B;
   display: none;
 }
-#navbar .navbar__checkOut svg {
-  width: 25px;
+#navbar .navbar__checkOut img {
+  display: block;
+  width: 30px;
 }
 #navbar .navbar__controls {
   display: -webkit-box;
@@ -160,8 +180,10 @@ button:focus {
   padding-inline: 0;
   position: relative;
 }
-#navbar .navbar__controls > button svg {
+#navbar .navbar__controls > button img {
+  display: block;
   width: 16px;
+  margin-bottom: 0.2rem;
 }
 #navbar .navbar__controls > button span {
   position: absolute;
@@ -457,6 +479,32 @@ button:focus {
 #navbar .currency-menu button:not(:last-of-type) {
   margin-bottom: 0.8rem;
 }
+#navbar .category-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 8%;
+  padding: 0.9rem 0.75rem;
+  z-index: 9;
+  background-color: #FFFFFF;
+  -webkit-box-orient: vertical !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: column !important;
+          flex-direction: column !important;
+  -webkit-filter: drop-shadow(0px 4px 25px rgba(168, 172, 176, 0.19));
+          filter: drop-shadow(0px 4px 25px rgba(168, 172, 176, 0.19));
+}
+#navbar .category-list button {
+  padding-right: 1rem;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 27px;
+  color: #1D1F22;
+  text-align: left;
+}
+#navbar .category-list button:not(:last-of-type) {
+  margin-bottom: 0.5rem;
+}
 
 .plp {
   background-color: #FFFFFF;
@@ -469,6 +517,7 @@ button:focus {
   font-size: 32px;
   line-height: 50px;
   margin-block: 4rem;
+  text-transform: capitalize;
 }
 .plp .products-wrapper {
   display: -ms-grid;
@@ -528,7 +577,7 @@ button:focus {
   right: 0;
   display: none;
 }
-.plp .product button svg {
+.plp .product button img {
   width: 3rem;
   height: 3rem;
 }
